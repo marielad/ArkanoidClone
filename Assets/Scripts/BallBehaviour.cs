@@ -38,29 +38,26 @@ public class BallBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("TopWall"))
         {
-            direction = new Vector3(direction.x, direction.y * Random.Range(-1f, 0.01f), 0f);
-
+            direction = new Vector3(direction.x, direction.y * Random.Range(-1f, 0f), 0f);
         }
-        else
-        if (collision.gameObject.tag.Equals("Wall"))
+        else if (collision.gameObject.tag.Equals("Wall"))
         {
-            direction = new Vector3(direction.x * Random.Range(-1f, 0.01f), direction.y, 0f);
+            direction = new Vector3(direction.x * Random.Range(-1f, 0f), direction.y, 0f);
         }
-        else
-        if (collision.gameObject.tag.Equals("Player"))
+        else if (collision.gameObject.tag.Equals("Player"))
         {
-            direction = new Vector3(direction.x, direction.y * Random.Range(-1f, 0.01f), 0f);
+            direction = new Vector3(direction.x, direction.y * Random.Range(-1f, 0f), 0f);
         }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag.Equals("Score") && lives < 0)
+        if (col.gameObject.tag.Equals("Score") && lives > 0)
         {
             lives--;
         }
         else {
-            gameOverScreen.SetActive(false);
+            gameOverScreen.SetActive(true);
         }
         playerLifeText.text = lives.ToString();
 
@@ -70,7 +67,13 @@ public class BallBehaviour : MonoBehaviour
     void ResetBall()
     {
         speed = originalSpeed;
-        direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 0f), 0);
+        direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 0.01f), 0);
         transform.position = Vector3.zero;
+    }
+
+    public void RestartGame() {
+        ResetBall();
+        lives = 5;
+        playerLifeText.text = lives.ToString();
     }
 }
