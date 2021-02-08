@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    public static PlayerBehaviour instance;
     public KeyCode leftKey;
     public KeyCode rightKey;
-    public float speed = 6.0f;
+    public float speed = 20.0f;
+
     float limitLeft = -3.5f;
     float limitRight = 3.5f;
 
+    void Awake()
+    {
+        PlayerBehaviour.instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -29,5 +34,16 @@ public class PlayerBehaviour : MonoBehaviour
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
 
+    }
+
+    public Vector3 GetPosition() {
+        return transform.position;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ball") { 
+            
+        }
     }
 }
