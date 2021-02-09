@@ -9,9 +9,14 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject gameOverScreen;
     public GameObject winScreen;
-    public TextMeshPro livesText;
 
-    public int lives = 3;
+    public TextMeshProUGUI livesText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI finalScoreText;
+    public int availibleLives = 3;
+    public int score = 0;
+
+    public int lives { get; set; }
 
     public bool isGameStarted { get; set; }
 
@@ -22,20 +27,44 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        this.lives = this.availibleLives;
         Screen.SetResolution(540,960,false);
         Ball.onBallDestroy += OnBallDestroy;
         BrickBehaviour.onBrickDestruction += OnBrickDestruction;
     }
 
     public void RestartGame() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        this.lives = this.availibleLives;
+        isGameStarted = false;
+        score = 0;
+        livesText.text = lives.ToString();
+        scoreText.text = score.ToString();
+        BallManager.instance.ResetBalls();
+        BrickManager.instance.LoadLevel();
+
+    }
+
+    public void NextLevel()
+    {
+        isGameStarted = false;
+        livesText.text = lives.ToString();
+        scoreText.text = score.ToString();
+        BallManager.instance.ResetBalls();
+        BrickManager.instance.LoadLevel();
+
     }
 
     private void OnBrickDestruction(BrickBehaviour brick)
     {
         if (BrickManager.instance.remainingBricks.Count <= 0)
         {
-                winScreen.SetActive(true);
+            score = 10 * brick.hits;
+            finalScoreText.text = score.ToString();
+            winScreen.SetActive(true);
+        }
+        else {
+            score = 10 * brick.scoreMulti;
+            scoreText.text = score.ToString();
         }
     }
 

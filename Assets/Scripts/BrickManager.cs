@@ -5,6 +5,7 @@ using UnityEngine;
 public class BrickManager : MonoBehaviour
 {
     public static BrickManager instance;
+
     public BrickBehaviour brickPrefab;
     public Sprite[] sprites;
     public int rows;
@@ -39,7 +40,7 @@ public class BrickManager : MonoBehaviour
     {
         BallManager.instance.ResetBalls();
         GameManager.instance.isGameStarted = false;
-        GenerateLevel();
+        this.level= GenerateLevel();
         GenerateBricks();
     }
     private int[,] GenerateLevel()
