@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameObject gameOverScreen;
     public GameObject winScreen;
+    public TextMeshPro livesText;
 
     public int lives = 3;
 
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
                 gameOverScreen.SetActive(true);
             }
             else {
+                livesText.text = lives.ToString();
                 BallManager.instance.ResetBalls();
                 isGameStarted = false;
                 BrickManager.instance.GenerateBricks();
