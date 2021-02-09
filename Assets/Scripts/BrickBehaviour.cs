@@ -11,10 +11,10 @@ public class BrickBehaviour : MonoBehaviour
     public int hits;
     public static event Action<BrickBehaviour> OnBrickDestruction;
 
-    private void Start()
+    private void Awake()
     {
         this.sr = this.GetComponent<SpriteRenderer>();
-        this.sr.sprite = BrickManager.instance.Sprites[this.hits -1];
+        //this.sr.sprite = BrickManager.instance.sprites[this.hits -1];
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -24,7 +24,14 @@ public class BrickBehaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
         else {
-            this.sr.sprite = BrickManager.instance.Sprites[this.hits -1];
+            this.sr.sprite = BrickManager.instance.sprites[this.hits -1];
         }
     }
+
+    public void Init(Transform tf, Sprite sprite, int hitpoints) {
+        this.transform.SetParent(tf);
+        this.sr.sprite = sprite;
+        this.hits = hitpoints;
+    }
+
 }

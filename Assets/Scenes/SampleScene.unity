@@ -875,14 +875,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f304bdc51034fa4e9f48d7d3d466702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brickPrefab: {fileID: 0}
-  Sprites:
+  brickPrefab: {fileID: 6205940840823323765, guid: 12bb20670aa7245478689b42009752e6,
+    type: 3}
+  sprites:
   - {fileID: 21300000, guid: fdd0fb89856fe8441ab401558285d0f4, type: 3}
   - {fileID: 21300000, guid: 61e621b7b94a45b4f81e8dc9f9a132c9, type: 3}
   - {fileID: 21300000, guid: 593e698b85ecc314ba062674e535547a, type: 3}
   - {fileID: 21300000, guid: 11b4b08de82074545ba94710f6458640, type: 3}
   - {fileID: 21300000, guid: 6404815c2ed2db548b9001e120931dab, type: 3}
   - {fileID: 21300000, guid: 6c783b3a24bfe3c428b4bd3525e193ed, type: 3}
+  rows: 5
+  columns: 6
+  initialBrickSpawnPositionX: -3.5
+  initialBrickSpawnPositionY: 6.5
+  spacing: 0.75
+  brickWidth: 0.64
+  brickHeight: 0.32
 --- !u!1 &1282953956
 GameObject:
   m_ObjectHideFlags: 0
