@@ -9,7 +9,7 @@ public class BrickBehaviour : MonoBehaviour
     SpriteRenderer sr;
 
     public int hits;
-    public static event Action<BrickBehaviour> OnBrickDestruction;
+    public static event Action<BrickBehaviour> onBrickDestruction;
 
     private void Awake()
     {
@@ -21,6 +21,7 @@ public class BrickBehaviour : MonoBehaviour
         hits--;
         if (hits <= 0)
         {
+            BrickManager.instance.remainingBricks.Remove(this);
             Destroy(this.gameObject);
         }
         else {

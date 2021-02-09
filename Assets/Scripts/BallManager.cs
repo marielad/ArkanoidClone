@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour
 {
-    [SerializeField]
-    Ball ballPrefab;
+    public Ball ballPrefab;
 
     Ball firstBall;
     Rigidbody2D rb;
@@ -13,13 +12,20 @@ public class BallManager : MonoBehaviour
     
     public float ballSpeed = 1.5f;
     public List<Ball> BallList { get; set; }
+    public static BallManager instance;
+
+
+    void Awake()
+    {
+        BallManager.instance = this;
+    }
 
     private void Start()
     {
         InitBall();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!GameManager.instance.isGameStarted) {
             startPosition = new Vector3(PlayerBehaviour.instance.GetPosition().x, PlayerBehaviour.instance.GetPosition().y + 0.45f, 0);
@@ -31,11 +37,20 @@ public class BallManager : MonoBehaviour
         }
     }
 
+    internal void ResetBalls()
+    {
+        foreach (var ball in this.BallList) {
+            Destroy(ball.gameObject);
+        }
+
+        InitBall();
+    }
+
     public Vector2 BallVelocity()
     {
         return new Vector2(Random.Range(-1f, 1f), 1f) * ballSpeed;
     }
-    private void InitBall() {
+    void InitBall() {
         startPosition = new Vector3(PlayerBehaviour.instance.GetPosition().x, PlayerBehaviour.instance.GetPosition().y + 0.45f, 0);
         firstBall = Instantiate(ballPrefab, startPosition, Quaternion.identity); //sin rotación
         rb = firstBall.GetComponent<Rigidbody2D>();
@@ -43,5 +58,12 @@ public class BallManager : MonoBehaviour
         this.BallList = new List<Ball> {
             firstBall
         };
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player") {
+            rb.velocity = BallVelocity();
+        }
     }
 }

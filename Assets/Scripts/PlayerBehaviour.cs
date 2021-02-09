@@ -39,11 +39,4 @@ public class PlayerBehaviour : MonoBehaviour
     public Vector3 GetPosition() {
         return transform.position;
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ball") { 
-            
-        }
-    }
 }

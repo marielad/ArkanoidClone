@@ -29,13 +29,20 @@ public class BrickManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.level = this.LoadLevel();
+        this.level = this.GenerateLevel();
         this.remainingBricks = new List<BrickBehaviour>();
         this.bricksContainer = new GameObject("bricksContaines");
         GenerateBricks();
     }
 
-    private int[,] LoadLevel()
+    public void LoadLevel()
+    {
+        BallManager.instance.ResetBalls();
+        GameManager.instance.isGameStarted = false;
+        GenerateLevel();
+        GenerateBricks();
+    }
+    private int[,] GenerateLevel()
     {
         int[,] currentLevel = new int[rows, columns];
 
@@ -47,16 +54,17 @@ public class BrickManager : MonoBehaviour
         return currentLevel;
     }
 
-    //private void ClearRemainingBricks()
-    //{
-    //    foreach (BrickBehaviour brick in this.RemainingBricks.ToList())
-    //    {
-    //        Destroy(brick.gameObject);
-    //    }
-    //}
-
-    private void GenerateBricks()
+    private void ClearRemainingBricks()
     {
+        foreach (BrickBehaviour brick in this.remainingBricks)
+        {
+            Destroy(brick.gameObject);
+        }
+    }
+
+    public void GenerateBricks()
+    {
+        ClearRemainingBricks();
         this.remainingBricks = new List<BrickBehaviour>();
         int[,] currentLevelData = this.level;
         float currentSpawnX = initialBrickSpawnPositionX;
@@ -89,7 +97,6 @@ public class BrickManager : MonoBehaviour
         }
 
         this.initialBricksCount = this.remainingBricks.Count;
-        //OnLevelLoaded?.Invoke();
     }
 
 
