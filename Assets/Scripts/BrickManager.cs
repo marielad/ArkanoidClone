@@ -50,7 +50,7 @@ public class BrickManager : MonoBehaviour
         for (int i = 0; i < currentLevel.GetLength(0); i++)
         {
             for (int j = 0; j < currentLevel.GetLength(1); j++)
-                currentLevel[i, j] = Random.Range(0,7);
+                currentLevel[i, j] = Random.Range(0,2); //cambiar a 0,2 para pruebas
         }
         return currentLevel;
     }

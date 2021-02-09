@@ -675,6 +675,7 @@ MonoBehaviour:
   finalScoreText: {fileID: 1458776966}
   availibleLives: 3
   score: 0
+  highScore: 0
 --- !u!1 &808151322
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,7 +1099,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 11b4b08de82074545ba94710f6458640, type: 3}
   - {fileID: 21300000, guid: 6404815c2ed2db548b9001e120931dab, type: 3}
   - {fileID: 21300000, guid: 6c783b3a24bfe3c428b4bd3525e193ed, type: 3}
-  rows: 5
+  rows: 2
   columns: 6
   initialBrickSpawnPositionX: -3.3
   initialBrickSpawnPositionY: 6.5
@@ -3278,7 +3279,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Jugar otra vez
+  m_Text: Siguiente nivel
 --- !u!222 &2111693737
 CanvasRenderer:
   m_ObjectHideFlags: 0

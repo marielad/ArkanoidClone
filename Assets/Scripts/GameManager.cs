@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public int availibleLives = 3;
     public int score = 0;
 
+    public int highScore = 0;
+    string highScoreKey = "HighScore";
     public int lives { get; set; }
 
     public bool isGameStarted { get; set; }
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
         this.lives = this.availibleLives;
         Screen.SetResolution(540,960,false);
         Ball.onBallDestroy += OnBallDestroy;
@@ -34,6 +37,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
+        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
         this.lives = this.availibleLives;
         isGameStarted = false;
         score = 0;
@@ -46,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
+        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
         isGameStarted = false;
         livesText.text = lives.ToString();
         scoreText.text = score.ToString();
@@ -58,12 +63,22 @@ public class GameManager : MonoBehaviour
     {
         if (BrickManager.instance.remainingBricks.Count <= 0)
         {
-            score = 10 * brick.hits;
+            score += 10 * brick.hits;
             finalScoreText.text = score.ToString();
+            if (score > highScore)
+            {
+                PlayerPrefs.SetInt(highScoreKey, score);
+                PlayerPrefs.Save();
+            }
             winScreen.SetActive(true);
         }
         else {
-            score = 10 * brick.scoreMulti;
+            score += 10 * brick.scoreMulti;
+            if (score > highScore)
+            {
+                PlayerPrefs.SetInt(highScoreKey, score);
+                PlayerPrefs.Save();
+            }
             scoreText.text = score.ToString();
         }
     }
