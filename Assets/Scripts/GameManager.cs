@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI livesText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI finalScoreText;
     public int availibleLives = 3;
     public int score = 0;
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
+        GetHighScore();
         this.lives = this.availibleLives;
         Screen.SetResolution(540,960,false);
         Ball.onBallDestroy += OnBallDestroy;
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
+        GetHighScore();
         this.lives = this.availibleLives;
         isGameStarted = false;
         score = 0;
@@ -50,13 +51,18 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
-        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
+        GetHighScore();
         isGameStarted = false;
         livesText.text = lives.ToString();
         scoreText.text = score.ToString();
         BallManager.instance.ResetBalls();
         BrickManager.instance.LoadLevel();
 
+    }
+
+    void GetHighScore() {
+        highScore = PlayerPrefs.GetInt(highScoreKey, 0);
+        highScoreText.text = highScore.ToString();
     }
 
     private void OnBrickDestruction(BrickBehaviour brick)
@@ -68,7 +74,7 @@ public class GameManager : MonoBehaviour
             if (score > highScore)
             {
                 PlayerPrefs.SetInt(highScoreKey, score);
-                PlayerPrefs.Save();
+                //PlayerPrefs.Save();
             }
             winScreen.SetActive(true);
         }
