@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI bricksText;
     public int availibleLives = 3;
     public int score = 0;
 
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         Screen.SetResolution(540,960,false);
         Ball.onBallDestroy += OnBallDestroy;
         BrickBehaviour.onBrickDestruction += OnBrickDestruction;
+
     }
 
     public void RestartGame() {
@@ -46,7 +48,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
         BallManager.instance.ResetBalls();
         BrickManager.instance.LoadLevel();
-
+        bricksText.text = BrickManager.instance.remainingBricks.Count.ToString();
     }
 
     public void NextLevel()
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
         BallManager.instance.ResetBalls();
         BrickManager.instance.LoadLevel();
+        bricksText.text = BrickManager.instance.remainingBricks.Count.ToString();
 
     }
 
@@ -67,15 +70,18 @@ public class GameManager : MonoBehaviour
 
     private void OnBrickDestruction(BrickBehaviour brick)
     {
+        AudioManager.instance.PlayBrickSound();
         if (BrickManager.instance.remainingBricks.Count <= 0)
         {
             score += 10 * brick.hits;
             finalScoreText.text = score.ToString();
             if (score > highScore)
             {
+                AudioManager.instance.PlayHighScoreSound();
                 PlayerPrefs.SetInt(highScoreKey, score);
                 //PlayerPrefs.Save();
             }
+            BallManager.instance.ResetBalls();
             winScreen.SetActive(true);
         }
         else {
@@ -87,6 +93,7 @@ public class GameManager : MonoBehaviour
             }
             scoreText.text = score.ToString();
         }
+        bricksText.text = BrickManager.instance.remainingBricks.Count.ToString();
     }
 
     private void OnBallDestroy(Ball ball) {
@@ -94,8 +101,10 @@ public class GameManager : MonoBehaviour
             lives--;
             if (this.lives <= 0){
                 gameOverScreen.SetActive(true);
+                AudioManager.instance.PlayDeathSound();
             }
             else {
+                AudioManager.instance.PlayButtonSound();
                 livesText.text = lives.ToString();
                 BallManager.instance.ResetBalls();
                 isGameStarted = false;

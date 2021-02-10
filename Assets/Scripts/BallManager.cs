@@ -7,7 +7,7 @@ public class BallManager : MonoBehaviour
     public Ball ballPrefab;
 
     Ball firstBall;
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     Vector3 startPosition;
     
     public float ballSpeed = 1.5f;
@@ -60,10 +60,4 @@ public class BallManager : MonoBehaviour
         };
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Wall") {
-            rb.velocity = BallVelocity();
-        }
-    }
 }

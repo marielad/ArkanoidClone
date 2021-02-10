@@ -13,4 +13,11 @@ public class LifeManager : MonoBehaviour
             ball.Destroy();
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ball")
+        {
+            AudioManager.instance.PlayBounceSound();
+        }
+    }
 }
